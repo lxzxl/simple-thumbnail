@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Card from '../components/Card';
 import Modal from '../components/Modal';
 import { openModal, closeModal } from '../actions';
-import { getImages } from '../api';
+import Axios from 'axios';
 
 class Thumbnail extends PureComponent {
   static propTypes = {
@@ -19,7 +19,7 @@ class Thumbnail extends PureComponent {
     };
   }
   componentDidMount() {
-    getImages().then(data => {
+    Axios.get('http://localhost:3001/api/images').then(({ data }) => {
       this.setState({ data });
     });
   }

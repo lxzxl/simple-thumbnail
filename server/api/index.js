@@ -1,4 +1,4 @@
-import Mock from 'mockjs';
+const Mock = require('mockjs');
 
 function genData() {
   const id = Mock.Random.increment();
@@ -10,15 +10,10 @@ function genData() {
     updateAt: Mock.Random.date()
   };
 }
-
-function fetchData() {
+module.exports.getImages = function() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       return resolve(new Array(10).fill(null).map(_ => genData()));
     }, 1000);
   });
-}
-
-export async function getImages() {
-  return await fetchData();
-}
+};

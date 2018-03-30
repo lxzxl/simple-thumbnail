@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Thumbnail from './containers/Thumbnail';
-import registerServiceWorker from './registerServiceWorker';
 import reducer from './reducers';
 
 import { createStore } from 'redux';
@@ -15,4 +14,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-registerServiceWorker();
