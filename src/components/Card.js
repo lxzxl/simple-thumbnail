@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const CardContent = ({ author, email, updateAt }) => {
@@ -25,27 +25,20 @@ CardContent.propTypes = {
   desc: PropTypes.string
 };
 
-class Card extends PureComponent {
-  static propTypes = {
-    data: PropTypes.shape(CardContent.propTypes).isRequired,
-    onClick: PropTypes.func
-  };
-  render() {
-    const { data } = this.props;
-    return (
-      <div
-        className="card"
-        onClick={e => this.props.onClick && this.props.onClick(e)}
-      >
-        <div className="card-image">
-          <figure className="image is-4by3">
-            <img src={data.image} alt="Placeholder" />
-          </figure>
-        </div>
-        {this.props.showContent && <CardContent {...data} />}
-      </div>
-    );
-  }
-}
+const Card = ({ data, showContent, onClick }) => (
+  <div className="card" onClick={e => onClick && onClick(e)}>
+    <div className="card-image">
+      <figure className="image is-4by3">
+        <img src={data.image} alt="Placeholder" />
+      </figure>
+    </div>
+    {showContent && <CardContent {...data} />}
+  </div>
+);
+
+Card.propTypes = {
+  data: PropTypes.shape(CardContent.propTypes).isRequired,
+  onClick: PropTypes.func
+};
 
 export default Card;
