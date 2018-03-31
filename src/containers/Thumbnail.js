@@ -19,9 +19,12 @@ class Thumbnail extends PureComponent {
     };
   }
   componentDidMount() {
-    Axios.get('http://localhost:3001/api/images').then(({ data }) => {
-      this.setState({ data });
-    });
+    const { protocol, hostname, port } = window.location;
+    Axios.get(`${protocol}//${hostname}:${port}/api/images`).then(
+      ({ data }) => {
+        this.setState({ data });
+      }
+    );
   }
   render() {
     const { activeCard, handleClick, handleClose } = this.props;
