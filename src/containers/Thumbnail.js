@@ -1,10 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { injectGlobal } from 'styled-components';
+import Axios from 'axios';
 import Card from '../components/Card';
 import Modal from '../components/Modal';
 import { openModal, closeModal } from '../actions';
-import Axios from 'axios';
+
+injectGlobal`
+body{
+  width: 100vw;
+}
+`;
 
 class Thumbnail extends PureComponent {
   static propTypes = {
@@ -19,9 +26,12 @@ class Thumbnail extends PureComponent {
     };
   }
   componentDidMount() {
-    Axios.get('http://localhost:3001/api/images').then(({ data }) => {
-      this.setState({ data });
-    });
+    const { protocol, hostname, port } = window.location;
+    Axios.get(`${protocol}//${hostname}:${port}/api/images`).then(
+      ({ data }) => {
+        this.setState({ data });
+      }
+    );
   }
   render() {
     const { activeCard, handleClick, handleClose } = this.props;

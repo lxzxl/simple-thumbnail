@@ -2,10 +2,11 @@ import React, { PureComponent } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import styled, { injectGlobal } from 'styled-components';
+import 'scrollingelement';
 
 injectGlobal`
-  html.modal-open {
-    overflow: hidden;
+  body.modal-open {
+    position: fixed;
   }
 `;
 
@@ -18,10 +19,17 @@ class Modal extends PureComponent {
   };
 
   componentWillReceiveProps(nextProps) {
-    document
-      .getElementsByTagName('html')[0]
-      .classList.toggle('modal-open', nextProps.isActive);
+    if (nextProps.isActive) {
+      this.afterOpen();
+    } else {
+      this.beforeClose();
+    }
   }
+
+  componentWillUnmount() {
+    this.beforeClose();
+  }
+
   renderPortal() {
     const { className, isActive = false, showClose = true } = this.props;
     return (
@@ -40,6 +48,23 @@ class Modal extends PureComponent {
       this.renderPortal(),
       document.getElementById('modal-root')
     );
+  }
+
+  /**
+   * Aimed to resolve the modal scrolling issue on mobile devices.
+   */
+  body = document.getElementsByTagName('body')[0];
+  bodyCls = 'modal-open';
+  scrollTop;
+  afterOpen() {
+    this.scrollTop = document.scrollingElement.scrollTop;
+    this.body.classList.add(this.bodyCls);
+    document.body.style.top = -this.scrollTop + 'px';
+  }
+  beforeClose() {
+    this.body.classList.remove(this.bodyCls);
+    // scrollTop lost after set position:fixed, restore it back.
+    document.scrollingElement.scrollTop = this.scrollTop;
   }
 
   close = () => {
