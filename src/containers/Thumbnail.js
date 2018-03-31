@@ -1,10 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { injectGlobal } from 'styled-components';
+import Axios from 'axios';
 import Card from '../components/Card';
 import Modal from '../components/Modal';
 import { openModal, closeModal } from '../actions';
-import Axios from 'axios';
+
+injectGlobal`
+body{
+  width: 100vw;
+}
+`;
 
 class Thumbnail extends PureComponent {
   static propTypes = {
