@@ -17,6 +17,7 @@ class Modal extends PureComponent {
     showClose: PropTypes.bool,
     onClose: PropTypes.func
   };
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.isActive) {
       this.afterOpen();
@@ -48,6 +49,7 @@ class Modal extends PureComponent {
       document.getElementById('modal-root')
     );
   }
+
   /**
    * Aimed to resolve the modal scrolling issue on mobile devices.
    */
